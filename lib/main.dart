@@ -13,7 +13,6 @@ import 'package:magdsoft_flutter_structure/presentation/widget/toast.dart';
 import 'package:sizer/sizer.dart';
 import 'package:intl/intl.dart';
 
-
 late LocalizationDelegate delegate;
 
 Future<void> main() async {
@@ -101,7 +100,7 @@ class _MyAppState extends State<MyApp> {
                       appBarTheme: const AppBarTheme(
                         elevation: 0.0,
                         systemOverlayStyle: SystemUiOverlayStyle(
-                          //statusBarColor: AppColors.transparent,
+                          // statusBarColor: AppColors.transparent,
                           statusBarIconBrightness: Brightness.dark,
                         ),
                       ),
