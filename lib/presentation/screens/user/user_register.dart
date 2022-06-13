@@ -107,11 +107,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: defaultTextFormField(
-                              controller: cubit.emailController,
+                              controller: cubit.phoneController,
                               keyboardType: TextInputType.emailAddress,
                               labelText: 'phone',
                               hintText: '+010********',
-                              prefixIcon: Icons.email_outlined,
+                              prefixIcon: Icons.phone,
                               validate: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please Enter Your Email Address';
