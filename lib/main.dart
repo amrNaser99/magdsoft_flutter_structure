@@ -9,11 +9,14 @@ import 'package:magdsoft_flutter_structure/business_logic/global_cubit/global_cu
 import 'package:magdsoft_flutter_structure/data/local/cache_helper.dart';
 import 'package:magdsoft_flutter_structure/data/remote/dio_helper.dart';
 import 'package:magdsoft_flutter_structure/presentation/router/app_router.dart';
+import 'package:magdsoft_flutter_structure/presentation/screens/shared/componands/applocale.dart';
+import 'package:magdsoft_flutter_structure/presentation/styles/colors.dart';
+import 'package:magdsoft_flutter_structure/presentation/styles/themes.dart';
 import 'package:magdsoft_flutter_structure/presentation/widget/toast.dart';
 import 'package:sizer/sizer.dart';
 import 'package:intl/intl.dart';
 
-late LocalizationDelegate delegate;
+// late LocalizationDelegate delegate;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,13 +24,13 @@ Future<void> main() async {
         () async {
       DioHelper.init();
       await CacheHelper.init();
-      final locale =
-          CacheHelper.getDataFromSharedPreference(key: 'language') ?? "ar";
-      delegate = await LocalizationDelegate.create(
-        fallbackLocale: locale,
-        supportedLocales: ['ar', 'en'],
-      );
-      await delegate.changeLocale(Locale(locale));
+      // final locale =
+      //     CacheHelper.getDataFromSharedPreference(key: 'language') ?? "ar";
+      // delegate = await LocalizationDelegate.create(
+      //   fallbackLocale: locale,
+      //   supportedLocales: ['ar', 'en'],
+      // );
+      // await delegate.changeLocale(Locale(locale));
       runApp(MyApp(
         appRouter: AppRouter(),
       ));
@@ -52,17 +55,17 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    Intl.defaultLocale = delegate.currentLocale.languageCode;
+    // Intl.defaultLocale = delegate.currentLocale.languageCode;
 
-    delegate.onLocaleChanged = (Locale value) async {
-      try {
-        setState(() {
-          Intl.defaultLocale = value.languageCode;
-        });
-      } catch (e) {
-        showToast(e.toString());
-      }
-    };
+    // delegate.onLocaleChanged = (Locale value) async {
+    //   try {
+    //     setState(() {
+    //       Intl.defaultLocale = value.languageCode;
+    //     });
+    //   } catch (e) {
+    //     showToast(e.toString());
+    //   }
+    // };
   }
 
   @override
@@ -78,35 +81,42 @@ class _MyAppState extends State<MyApp> {
         builder: (context, state) {
           return Sizer(
             builder: (context, orientation, deviceType) {
-              return LocalizedApp(
-                delegate,
-                LayoutBuilder(builder: (context, constraints) {
-                  return MaterialApp(
-                    debugShowCheckedModeBanner: false,
-                    title: 'Werash',
-                    localizationsDelegates: [
-                      GlobalCupertinoLocalizations.delegate,
-                      DefaultCupertinoLocalizations.delegate,
-                      GlobalMaterialLocalizations.delegate,
-                      GlobalWidgetsLocalizations.delegate,
-                      delegate,
-                    ],
-                    locale: delegate.currentLocale,
-                    supportedLocales: delegate.supportedLocales,
-                    onGenerateRoute: widget.appRouter.onGenerateRoute,
-                    theme: ThemeData(
-                      fontFamily: 'cairo',
-                      //scaffoldBackgroundColor: AppColors.white,
-                      appBarTheme: const AppBarTheme(
-                        elevation: 0.0,
-                        systemOverlayStyle: SystemUiOverlayStyle(
-                          // statusBarColor: AppColors.transparent,
-                          statusBarIconBrightness: Brightness.dark,
-                        ),
-                      ),
-                    ),
-                  );
-                }),
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                localizationsDelegates: const [
+                  AppLocale.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                ],
+                locale: BlocProvider.of<GlobalCubit>(context).checked
+                    ? const Locale('ar', "")
+                    : const Locale('en', ""),
+                supportedLocales: const [
+                  Locale('en', ''),
+                  Locale('ar', ''),
+                ],
+                localeResolutionCallback: (currentLang, supportLang) {
+                  if (currentLang != null) {
+                    for (Locale locale in supportLang) {
+                      if (locale.languageCode == currentLang.languageCode) {
+                        return currentLang;
+                      }
+                    }
+                  }
+                  return supportLang.first;
+                },
+                title: 'Magdsoft Flutter InternShip ',
+                // localizationsDelegates: [
+                //   GlobalCupertinoLocalizations.delegate,
+                //   DefaultCupertinoLocalizations.delegate,
+                //   GlobalMaterialLocalizations.delegate,
+                //   GlobalWidgetsLocalizations.delegate,
+                //   delegate,
+                // ],
+                // locale: delegate.currentLocale,
+                // supportedLocales: delegate.supportedLocales,
+                onGenerateRoute: widget.appRouter.onGenerateRoute,
+                theme: appTheme,
               );
             },
           );
@@ -115,3 +125,35 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+//
+// LocalizedApp(
+// delegate,
+// LayoutBuilder(builder: (context, constraints) {
+// return MaterialApp(
+// debugShowCheckedModeBanner: false,
+// title: 'Werash',
+// localizationsDelegates: [
+// GlobalCupertinoLocalizations.delegate,
+// DefaultCupertinoLocalizations.delegate,
+// GlobalMaterialLocalizations.delegate,
+// GlobalWidgetsLocalizations.delegate,
+// delegate,
+// ],
+// locale: delegate.currentLocale,
+// supportedLocales: delegate.supportedLocales,
+// onGenerateRoute: widget.appRouter.onGenerateRoute,
+// theme: ThemeData(
+// fontFamily: 'cairo',
+// // scaffoldBackgroundColor: AppColor.primary,
+// appBarTheme: const AppBarTheme(
+// elevation: 0.0,
+// systemOverlayStyle: SystemUiOverlayStyle(
+// statusBarColor: Colors.transparent,
+// statusBarIconBrightness: Brightness.dark,
+// ),
+// ),
+// ),
+// );
+// }),
+// );
