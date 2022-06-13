@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:magdsoft_flutter_structure/business_logic/global_cubit/global_cubit.dart';
+import 'package:magdsoft_flutter_structure/presentation/screens/shared/componands/applocale.dart';
 import 'package:magdsoft_flutter_structure/presentation/screens/shared/componands/componands.dart';
 import 'package:magdsoft_flutter_structure/presentation/screens/user/user_register.dart';
 import 'package:magdsoft_flutter_structure/presentation/styles/colors.dart';
@@ -27,21 +28,24 @@ class _LoginScreenState extends State<LoginScreen> {
           appBar: AppBar(
             backgroundColor: AppColor.primary,
             actions: [
-
-            AdvancedSwitch(
-              controller: cubit.switchController,
-              activeColor: Colors.deepPurpleAccent,
-              activeChild: const Text('en'),
-              inactiveColor: Colors.indigo.shade400,
-              inactiveChild: const Text('ar'),
-              enabled: true,
-            ),
-              const SizedBox(width: 15 ,)
-          ],),
-          body: Container(
-            alignment: Alignment.topCenter,
-            child:
-              Column(
+              AdvancedSwitch(
+                controller: cubit.switchController,
+                activeColor: Colors.deepPurpleAccent,
+                activeChild: const Text('en'),
+                inactiveColor: Colors.indigo.shade400,
+                inactiveChild: const Text('ar'),
+                enabled: true,
+              ),
+              const SizedBox(
+                width: 15,
+              )
+            ],
+          ),
+          body: SingleChildScrollView(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              alignment: Alignment.topCenter,
+              child: Column(
                 children: [
                   Container(
                     height: MediaQuery.of(context).size.height * 0.33,
@@ -52,12 +56,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         alignment: Alignment.center,
                       ),
                     ),
-
                   ),
                   Expanded(
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-
                       decoration: const BoxDecoration(
                         color: AppColor.white,
                         borderRadius: BorderRadiusDirectional.only(
@@ -68,11 +70,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.only(top: 20),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20),
                             child: Text(
-                              'LOGIN',
-                              style: TextStyle(
+                              getLang(context, 'Login'),
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
@@ -152,8 +154,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ConditionalBuilder(
                             condition: true,
                             builder: (context) => defaultButton(
-                              width: MediaQuery.of(context).size.width *0.5,
-                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
                               color: AppColor.primary,
                               text: 'Register',
                               onPressed: () {
@@ -172,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
-
+            ),
           ),
         );
       },

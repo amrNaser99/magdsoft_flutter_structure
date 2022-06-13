@@ -1,20 +1,17 @@
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:magdsoft_flutter_structure/business_logic/global_cubit/global_cubit.dart';
-import 'package:magdsoft_flutter_structure/presentation/screens/shared/componands/componands.dart';
-import 'package:magdsoft_flutter_structure/presentation/screens/user/user_register.dart';
 import 'package:magdsoft_flutter_structure/presentation/styles/colors.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class UserProfile extends StatefulWidget {
+  const UserProfile({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<UserProfile> createState() => _UserProfileState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<GlobalCubit, GlobalState>(

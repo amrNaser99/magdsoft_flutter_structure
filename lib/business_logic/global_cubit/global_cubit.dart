@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:magdsoft_flutter_structure/data/remote/dio_helper.dart';
-import 'package:magdsoft_flutter_structure/presentation/widget/toast.dart';
+import 'package:magdsoft_flutter_structure/presentation/screens/shared/componands/componands.dart';
 
 import '../../constants/end_points.dart';
 
@@ -28,11 +28,15 @@ class GlobalCubit extends Cubit<GlobalState> {
     emit(LoginLoadingState());
     print('in userLogin');
 
-    DioHelper.postData(url: login, body: {
-      'email': email,
-      'password': password
-    }).then((value) {
+    DioHelper.postData(
+      url: login,
+      body: {'email': email, 'password': password},
+    ).then((value) {
+      emit(LoginSuccessState());
       print(value.data);
+      showToast(message: value.data);
+    }).catchError((error) {
+      showToast( message: error.toString());
     });
   }
 
@@ -46,11 +50,21 @@ class GlobalCubit extends Cubit<GlobalState> {
   }
 
   void userRegister(
-      {required String name, required String email, required String phone, required String password}) {
-    DioHelper.postData(url: register, body:
-    {'name': name,
-      'email': email, 'phone': phone,'password': password}).then((value) {
-        print(value.data);
+      {required String name,
+      required String email,
+      required String phone,
+      required String password}) {
+    DioHelper.postData(url: register, body: {
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'password': password
+    }).then((value) {
+      emit(RegisterSuccessState());
+      print(value.data);
+      showToast( message: value.data);
+    }).catchError((error) {
+      showToast(  message:error.toString());
     });
   }
 }

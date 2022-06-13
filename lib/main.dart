@@ -1,36 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:magdsoft_flutter_structure/business_logic/bloc_observer.dart';
 import 'package:magdsoft_flutter_structure/business_logic/global_cubit/global_cubit.dart';
-import 'package:magdsoft_flutter_structure/data/local/cache_helper.dart';
 import 'package:magdsoft_flutter_structure/data/remote/dio_helper.dart';
 import 'package:magdsoft_flutter_structure/presentation/router/app_router.dart';
 import 'package:magdsoft_flutter_structure/presentation/screens/shared/componands/applocale.dart';
-import 'package:magdsoft_flutter_structure/presentation/styles/colors.dart';
 import 'package:magdsoft_flutter_structure/presentation/styles/themes.dart';
-import 'package:magdsoft_flutter_structure/presentation/widget/toast.dart';
 import 'package:sizer/sizer.dart';
-import 'package:intl/intl.dart';
 
-// late LocalizationDelegate delegate;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   BlocOverrides.runZoned(
         () async {
-      DioHelper.init();
-      await CacheHelper.init();
-      // final locale =
-      //     CacheHelper.getDataFromSharedPreference(key: 'language') ?? "ar";
-      // delegate = await LocalizationDelegate.create(
-      //   fallbackLocale: locale,
-      //   supportedLocales: ['ar', 'en'],
-      // );
-      // await delegate.changeLocale(Locale(locale));
+      await DioHelper.init();
       runApp(MyApp(
         appRouter: AppRouter(),
       ));
@@ -106,15 +90,6 @@ class _MyAppState extends State<MyApp> {
                   return supportLang.first;
                 },
                 title: 'Magdsoft Flutter InternShip ',
-                // localizationsDelegates: [
-                //   GlobalCupertinoLocalizations.delegate,
-                //   DefaultCupertinoLocalizations.delegate,
-                //   GlobalMaterialLocalizations.delegate,
-                //   GlobalWidgetsLocalizations.delegate,
-                //   delegate,
-                // ],
-                // locale: delegate.currentLocale,
-                // supportedLocales: delegate.supportedLocales,
                 onGenerateRoute: widget.appRouter.onGenerateRoute,
                 theme: appTheme,
               );

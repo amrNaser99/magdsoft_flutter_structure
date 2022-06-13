@@ -1,7 +1,9 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:magdsoft_flutter_structure/presentation/screens/shared/componands/applocale.dart';
 import 'package:magdsoft_flutter_structure/presentation/screens/user/user_login.dart';
+import 'package:magdsoft_flutter_structure/presentation/screens/user/user_profile.dart';
 
 import '../../../business_logic/global_cubit/global_cubit.dart';
 import '../../styles/colors.dart';
@@ -18,18 +20,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<GlobalCubit, GlobalState>(
-      listener: (BuildContext context, Object? state) {},
+      listener: (BuildContext context, Object? state) {
+        if(state is RegisterSuccessState){
+          NavigateTo(context, const UserProfile());
+        }
+      },
       builder: (BuildContext context, state) {
         GlobalCubit cubit = BlocProvider.of(context);
 
         return Scaffold(
           extendBodyBehindAppBar: true,
           backgroundColor: AppColor.primary,
-          body: Stack(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            alignment: Alignment.topCenter,
-            children: [
-              Column(
+          body: SingleChildScrollView(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              child: Column(
                 children: [
                   Container(
                     height: MediaQuery.of(context).size.height * 0.25,
@@ -55,11 +60,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
 
-                          const Padding(
-                            padding: EdgeInsets.only(top: 20),
+                           Padding(
+                            padding: const EdgeInsets.only(top: 20),
                             child: Text(
-                              'REGISTER',
-                              style: TextStyle(
+                              getLang(context, "Register"),
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
@@ -180,7 +185,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               condition: state is! LoginLoadingState,
                               builder: (context) => defaultButton(
                                 color: AppColor.primary,
-                                text: 'Register',
+                                text: getLang(context, "Register"),
                                 onPressed: () {
                                   cubit.userRegister(
                                     name: cubit.nameController.text,
@@ -188,6 +193,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     phone: cubit.phoneController.text,
                                     password: cubit.passwordController.text,
                                   );
+                                  NavigateTo(context, const UserProfile());
                                 },
                                 isUpperCase: true,
                               ),
@@ -206,7 +212,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               builder: (context) => defaultButton(
                                 width: MediaQuery.of(context).size.width * 0.5,
                                 color: AppColor.primary,
-                                text: 'LOGIN',
+                                text: getLang(context, "Login"),
                                 onPressed: () {
                                   NavigateTo(context, const LoginScreen());
                                 },
@@ -224,7 +230,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ],
               ),
-            ],
+            ),
           ),
         );
       },
