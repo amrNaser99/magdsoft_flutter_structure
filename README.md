@@ -2,6 +2,8 @@
 
 magdsoft mobile application structure for flutter
 
+![Screenshot](WhatsApp Image 2022-06-13 at 6.02.26 PM.jpeg)
+
 ![](WhatsApp Image 2022-06-13 at 6.02.26 PM.jpeg)
 
 ![](WhatsApp Image 2022-06-13 at 6.02.42 PM.jpeg)
