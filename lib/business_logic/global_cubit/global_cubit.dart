@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:magdsoft_flutter_structure/data/remote/dio_helper.dart';
+import 'package:magdsoft_flutter_structure/presentation/widget/toast.dart';
 
 import '../../constants/end_points.dart';
 
@@ -29,6 +30,7 @@ class GlobalCubit extends Cubit<GlobalState> {
 
     DioHelper.postData(url: login, body: {
       'email': email,
+      'password': password
     }).then((value) {
       print(value.data);
     });
@@ -47,7 +49,7 @@ class GlobalCubit extends Cubit<GlobalState> {
       {required String name, required String email, required String phone, required String password}) {
     DioHelper.postData(url: register, body:
     {'name': name,
-      'email': email, 'phone': phone}).then((value) {
+      'email': email, 'phone': phone,'password': password}).then((value) {
         print(value.data);
     });
   }

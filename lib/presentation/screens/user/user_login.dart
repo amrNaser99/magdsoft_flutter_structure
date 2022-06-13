@@ -138,12 +138,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     email: cubit.emailController.text,
                                     password: cubit.passwordController.text,
                                   );
-                                  // if (cubit.formKey.currentState!.validate()) {
-                                  //   cubit.userLogin(
-                                  //     email: cubit.emailController.text,
-                                  //     password: cubit.passwordController.text,
-                                  //   );
-                                  // }
                                 },
                                 isUpperCase: true,
                               ),
@@ -156,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 20.0,
                           ),
                           ConditionalBuilder(
-                            condition: state is! LoginLoadingState,
+                            condition: true,
                             builder: (context) => defaultButton(
                               width: MediaQuery.of(context).size.width *0.5,
                               padding: const EdgeInsets.symmetric(horizontal: 20),
